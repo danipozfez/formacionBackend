@@ -1,4 +1,4 @@
-package org.example;
+package teoria;
 
 import java.util.function.BiConsumer;
 
