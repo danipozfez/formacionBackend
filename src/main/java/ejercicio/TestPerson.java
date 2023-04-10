@@ -111,6 +111,7 @@ public class TestPerson {
             posicion = line.indexOf(character, posicion + 1);
         }
         return contador;
+
     }
 
     /*public static void imprimirPersonasPorEdad(ArrayList<Person>persons,Person person){
