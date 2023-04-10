@@ -17,19 +17,52 @@ public class TestPerson {
         } catch (InvalidLineFormatException e) {
             System.err.println(e.getMessage());
         }
-        System.out.println("\nIMPRIMIENDO CON FILTRO Y UTILIZANDO STREAM\n");
+        System.out.println("\nIMPRIMIENDO CON FILTRO POR EDAD\n");
 
         filtraPersonasPorEdad(rutaFichero);
+        System.out.println("\nIMPRIMIENDO CON FILTRO POR LETRA\n");
+
+        filtraPersonasPorNombre(rutaFichero);
+
+        System.out.println("\nIMPRIMIENDO CON FILTRO POR EDAD Y CIUDAD \n");
+
+       filtraPersonasPorEdadYCiudad(rutaFichero);
+
+        System.out.println("\nIMPRIMIENDO CON FILTRO EDAD Y BARCELONA \n");
+
+        filtraPersonasPorCiudad(rutaFichero);
 
     }
 
     private static void filtraPersonasPorEdad(String rutaFichero) throws InvalidLineFormatException {
         devuelveListaDesdeCSV(rutaFichero).stream()
-                .filter(person -> person.getAge() > 20)
+                .filter(person -> person.getAge() < 25 && person.getAge()!=0)
                 .map(Person::toString)
                 .forEach(System.out::println);
     }
 
+    private static void filtraPersonasPorNombre(String rutaFichero) throws InvalidLineFormatException {
+        devuelveListaDesdeCSV(rutaFichero).stream()
+                .filter(person -> person.getName().charAt(0) != 'A' && person.getName().charAt(0) != 'Á')
+                .map(Person::toString)
+                .forEach(System.out::println);
+    }
+
+    private static void filtraPersonasPorEdadYCiudad(String rutaFichero) throws InvalidLineFormatException {
+
+        System.out.println(
+        devuelveListaDesdeCSV(rutaFichero).stream()
+                .filter(person -> person.getAge() < 25 && person.getAge()!=0 && person.getTown().equals("Madrid"))
+                .map(Person::toString)
+                .findFirst()
+        );
+    }
+    private static void filtraPersonasPorCiudad(String rutaFichero) throws InvalidLineFormatException {
+        devuelveListaDesdeCSV(rutaFichero).stream()
+                .filter(person -> person.getAge() < 25 && person.getAge()!=0 && person.getTown().equals("Barcelona"))
+                .map(Person::toString)
+                .forEach(System.out::println);
+    }
     public static List<Person> devuelveListaDesdeCSV(String ruta) throws InvalidLineFormatException {
         List<Person> persons = new ArrayList<>();
         List<Person> errores = new ArrayList<>();
