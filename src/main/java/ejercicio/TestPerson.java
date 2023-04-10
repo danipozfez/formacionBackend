@@ -7,17 +7,27 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TestPerson {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidLineFormatException {
 
         String rutaFichero = "src/main/java/FICHEROS/people.csv";
         List<Person> persons = new ArrayList<>();
         try {
-            // System.out.println(devuelveListaDesdeCSV(rutaFichero));
-            devuelveListaDesdeCSV(rutaFichero);
+             System.out.println(devuelveListaDesdeCSV(rutaFichero));
+           // devuelveListaDesdeCSV(rutaFichero);
         } catch (InvalidLineFormatException e) {
             System.err.println(e.getMessage());
         }
+        System.out.println("\nIMPRIMIENDO CON FILTRO Y UTILIZANDO STREAM\n");
 
+        filtraPersonasPorEdad(rutaFichero);
+
+    }
+
+    private static void filtraPersonasPorEdad(String rutaFichero) throws InvalidLineFormatException {
+        devuelveListaDesdeCSV(rutaFichero).stream()
+                .filter(person -> person.getAge() > 20)
+                .map(Person::toString)
+                .forEach(System.out::println);
     }
 
     public static List<Person> devuelveListaDesdeCSV(String ruta) throws InvalidLineFormatException {
@@ -46,7 +56,7 @@ public class TestPerson {
                         int age = values.length > 2 ? Integer.parseInt((values[2].trim())) : 0;
 
                         Person person = new Person(name, town, age);
-                        System.out.println(person);
+                        //System.out.println(person);
                         persons.add(person);
                     }
                 } catch (NumberFormatException e) {
@@ -69,5 +79,13 @@ public class TestPerson {
         }
         return contador;
     }
+
+    /*public static void imprimirPersonasPorEdad(ArrayList<Person>persons,Person person){
+
+        persons.stream()
+                .filter(persona -> person.getEdad() > 20)
+                .map(persons::getNombre)
+                .forEach(System.out::println);
+    }*/
 
 }

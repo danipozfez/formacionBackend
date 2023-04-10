@@ -40,6 +40,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return String.format("Name: %s. Town: %s. Age: %d",name,town,age);
+        return String.format("Name: %s. Town: %s. Age: %d\n",name,town,age);
     }
 }
